@@ -1,0 +1,14 @@
+How to Upload your Project on Github
+git init 
+git remote add origin 'type your url'
+git pull origin master
+git status 
+->>>>>git add manage.py (add One file)
+
+git add -A
+git commit -a -m "first commit"
+git log
+git branch 'your barnch name'
+git checkout 'your barnch name'
+git status
+git push origin 'your barnch name'

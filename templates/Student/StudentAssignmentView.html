@@ -1,0 +1,799 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'backend/assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'backend/assets/img/favicon.ico' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Assignment Details</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <script src="{% static 'backend/assets/js/plugins/chartist.min.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static 'backend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/assets/css/light-bootstrap-dashboard.css' %}" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'backend/assets/css/demo.css' %}" rel="stylesheet" />
+   
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'lined-textarea/jquery-linedtextarea.css' %}"/>
+<script src="{% static 'lined-textarea/jquery-linedtextarea.js' %}" type="text/javascript"></script>
+<script src="{% static 'aceeditor/js/ace.js'%}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'aceeditor/js/ext-language_tools.js'%}"></script>
+<script src="{% static 'aceeditor/js/ext-beautify.js'%}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-beautify.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+
+    $(document).ready(function(){
+
+        tempcount =  +document.getElementById('tabcount').value;
+        if(tempcount >= 5)
+        {
+            window.location = "/limitover";
+            
+        }
+    });
+    document.addEventListener("dblclick",() =>{
+        toggleScreen();
+     });
+     var count=0;
+     function handleVisibilityChange() {
+         
+         if (document.hidden) {
+           
+           // document.getElementById('tabcount').value
+            // count =("#tabcount").val();
+            
+            /* if(count >= tempcount)
+             {
+                $("#tabcount").val(count);
+                count = tempcount;
+             }*/
+            
+             count = count +1;
+             $("#countvalue").val(count);
+             //console.log($("#tabcount").val());
+             //$("#countvalue").val(count);
+             //tempcount =  +document.getElementById('tabcount').value;
+             //console.log(tempcount);
+                 if(count > 5)
+                {
+                    
+                    window.location = "/limitover";
+                    var finallang = $('.langselect').val();
+                   $("#finallanguage").val(finallang);
+                   if(finallang == 'java')
+                    {
+                        $("#filename").val("Main.java");
+                    }
+                    else if(finallang == 'cpp')
+                    {
+                        $("#filename").val("Main.cpp");
+                    }
+                    else if(finallang == 'python3')
+                    {
+                        $("#filename").val("Main.py");
+                    }
+                    else if(finallang == 'c')
+                    {
+                        $("#filename").val("Main.c");
+                    }
+                    else if(finallang == 'octave')
+                    {
+                        $("#filename").val("Main.m");
+                    }
+                    else if(finallang == 'php')
+                    {
+                        $("#filename").val("Main.php");
+                    }
+                    else if(finallang == 'pascle')
+                    {
+                        $("#filename").val("Main.pass");
+                    }
+                    $('#codesubmitform').submit();
+                 
+                 }
+            
+             if(alert('you open new tab '+count+' times'))
+             {
+                 
+             }
+             console.log("Hidden");
+         } else  {
+             
+             console.log("Visible");
+         }
+       }
+ 
+ 
+     document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+
+  /*
+    $(function() {
+        var setCookie,
+            removeCookie,
+            // Create constants for things instead of having same string
+            // in multiple places in code.
+            COOKIE_NAME = 'TabOpen',
+            SITE_WIDE_PATH = { path : '/' };
+            
+        setCookie = function () {
+            $.cookie(COOKIE_NAME, '1', SITE_WIDE_PATH); 
+        };
+    
+        removeCookie = function () {
+            $.removeCookie(COOKIE_NAME, SITE_WIDE_PATH);
+        };
+        
+        /*if($.cookie(COOKIE_NAME) === "1")
+        {
+            $(window).on("unload",removeCookie);
+        }
+        //  $.removeCookie(COOKIE_NAME, SITE_WIDE_PATH);
+        // We don't need to wait for DOM ready to check the cookie
+        if ($.cookie(COOKIE_NAME) === undefined) {
+            setCookie();
+            $(window).on("unload",removeCookie);
+            //$(window).unload(removeCookie);
+        } else {
+            // Replace the whole body with an error message when the DOM is ready.
+            $(function () { 
+                $('body').html('<div class="error">' + 
+                    '<h1>Sorry!</h1>' + 
+                    '<p>You can only have one instance of this web page open at a time.</p>' + 
+                    '</div>');
+                });
+            
+                setTimeout(function() {
+                    location.reload();
+                }, 1);
+        }
+
+        
+    });*/
+
+    
+
+    $(function() {
+        function ajaxSubmit(form) {
+            $.ajax({
+                type: form.attr('method'), // <-- get method of form
+                url: form.attr('action'), // <-- get action of form
+                data: form.serialize(), // <-- serialize all fields into a string that is ready to be posted to your PHP file
+                beforeSend: function(){
+    
+                },
+                success: function(data){
+                }
+            });
+        }
+    
+        $("#locForm").submit(function(e) {
+            e.preventDefault();
+            ajaxSubmit($(this));
+        });
+
+        
+    
+        setInterval(function() {
+            ajaxSubmit($("#locForm"));
+            
+        }, 1000);
+    });
+    document.addEventListener("fullscreenchange", function (event) {
+        if (document.fullscreenElement) {
+            // fullscreen is activated
+        } else {
+            // fullscreen is cancelled
+            //toggleScreen();
+           
+        }
+    });
+
+    function getFullscreenElement(){
+        return document.fullscreenElement || /* Standard syntax */
+        document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
+        document.mozFullScreenElement ||/* Firefox syntax */
+        document.msFullscreenElement; 
+    }
+
+    function toggleScreen(){
+    
+        if(getFullscreenElement()){
+            document.exitFullscreen();
+        }else{
+            //getElementById('full')
+            document.documentElement.requestFullscreen().catch((e) => {
+                console.log(e);
+            });
+        }
+    }
+
+     
+
+
+      
+
+    document.onkeydown = function (e) {
+        e = e || window.event;//Get event
+    
+        if (!e.ctrlKey) return;
+    
+        var code = e.which || e.keyCode;//Get key code
+    
+        switch (code) {
+            case 83://Block Ctrl+S
+            case 87://Block Ctrl+W -- Not work in Chrome and new Firefox
+            case 17:
+                alert('ctrl key is detected');
+                e.preventDefault();
+                e.stopPropagation();
+                break;
+
+            case 19:
+                if(alert('windows key is detected'))
+                {
+                e.preventDefault();
+                e.stopPropagation();
+                }
+                break;
+        }
+        return false;
+    };
+  </script>
+<style>
+    		td,th{
+    			padding:10px;
+                text-align:center;
+            }
+            textarea{white-space:pre-line}
+            #editor { 
+                margin: 0px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+            #parent {
+                width:70%;
+                height: 700px;
+                display:inline-block;
+                position:relative;
+            }
+
+            body:fullscreen {
+                overflow: scroll !important;
+              }
+              body:-ms-fullscreen {
+                overflow: scroll !important;
+              }
+              body:-webkit-full-screen {
+                overflow: scroll !important;
+              }
+              body:-moz-full-screen {
+                overflow: scroll !important;
+              }
+              
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!--<div class="sidebar" data-image="{% static 'backend/assets/img/sidebar-5.jpg' %}">
+            
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    
+                     Auto Grading System 
+                   
+                </div>
+                <ul class="nav">
+                    
+                    
+                    <li>
+                        <a class="nav-link" href="/StudentCourse">
+                            <i class="nc-icon nc-notes"></i>
+                            <p>Course</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/StudentBatch">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Batch</p>
+                        </a>
+                    </li>
+                   
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+           
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Dashboard">
+                                   Account
+                                </a>
+                            </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>-->
+            <div class="content" id="full" >
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    
+                                    <input type="hidden" id="tabcount" value="{{tabcount}}"/>
+                                    <a href="javascript:void(0);" class="goback btn btn-danger" id="{{assignment.topic.id}}">Back</a>
+                                  <!--  <a href="/StudentAssignmentDetails/{{assignment.topic.id}}" class="btn btn-info">Back</a>-->
+                                    <br> <br> <br>
+                                    <h3 class="card-title" style="font-weight:bold;">Topic Name {{assignment.topic}} </h3>
+                                    <br>
+                                    <h3 class="card-title" style="font-weight:bold;">Assignment {{assignment.name}} Details</h3>
+                                    <br>
+                                    Created By <b>{{assignment.instructor}}</b>
+                                   <h4> Assignment Created Date {{assignment.date}}</h4>
+                                   <h3 style="color: blue;font-weight: bold;">Note (Please read carefully):</h3>
+                                   <ul>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Full Screen to do Double click or press Full Screen Button.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Read given problem Defination carefully.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Opening New tab not allowed.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Opening New tab solution is not consider or disqualified.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Copy, Paste and Cut is not allowed.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Right Click is not allowed.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Select any given language.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Run code for press run code.</li></h4>
+                                    <h4 style="color: blue;font-weight: bold;"><li>Submit code for press submit (Only Last submission is count).</li></h4>
+                                  </ul>
+                                </div>
+                               
+                                <div class="card-body ">
+                                   
+                                 
+                                  <h3 style="font-weight:bold;">Defination </h3> 
+                                  <h4>{{assignment.defination|safe}}</h4>
+
+                                 
+                                  
+                                  <br>
+                                    <form action="/StudentAssignmentView/{{assignment.id}}" method="POST">
+                                        {%csrf_token%}
+                                    <label for="lang" style="color: black;"><h5>Language:</h5></label>  <label style="margin-left:150px;color: black;"><h5>Input</h5></label><br>
+                                    <div class="row">
+                                        <div  class="col-md-2">
+                                    <select name="lang" style="color: black;border:1px solid black" class="langselect form-control" required id="lang" >
+                                       
+                                        {% for lang in assignment.language.all %}
+                                                     {%if lang.name == langcur%}
+                                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected  class="form-control" value="{{lang.name}}">{{lang.name}}</option>
+                                                    {%elif langcur is None and lang.name == 'java'%}
+                                                    <option style="padding:10px;padding-left:20px;padding-right:20px" selected  class="form-control" value="{{lang.name}}">{{lang.name}}</option>
+                                                    {%else%}
+                                                    <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="{{lang.name}}">{{lang.name}}</option>
+                                                    {%endif%}
+
+                                                    
+                                        {% endfor%}
+                                       
+                                                   
+                                      
+                                    </select>   
+                                    <br>
+                                    <select name="curtheme"  style="color: black;border:1px solid black" class="themeselect form-control" required id="theme" >
+                                        {%for theme in listtheme%}
+                                        {%if curtheme == theme or theme == 'monokai' and curtheme is None%}
+                                        <option value="{{theme}}" selected>{{theme}}</option>
+                                        {%else%}
+                                        <option value="{{theme}}">{{theme}}</option>
+                                        {%endif%}
+                                       {%endfor%}
+                                     </select>
+                                    <br>
+                                    <input type="button" value="Full Screen" onclick="toggleScreen();"  class="btn btn-danger"/>
+                                    </div> 
+                                     <div class="col-md-10"> 
+                                         {%if input is None%}
+                                          <textarea cols="50"  rows="5" name="input" style="resize: none;"></textarea>
+                                          {%else%}
+                                          <textarea cols="50" rows="5" name="input" style="resize: none;">{{input}}</textarea>
+                                          {%endif%}
+                                         
+                                           
+                                     </div>
+
+                                    
+                                    </div>
+                                     {%if code is None%}
+
+
+{%if java == True%}
+
+
+<div id="parent"><div id="editor" class="editor" style="font-size:22px;border:1px solid black">class Main
+{                
+    public static void main(String [] args)
+    {
+        System.out.println("hello world");                            
+    }
+}</div>  </div>{%else%}<div id="parent"><div id="editor" class="editor" style="font-size:22px;border:1px solid black"></div></div>{%endif%}
+{%else%}
+<div id="parent">   <div id="editor" style="font-size:22px;border:1px solid black">{{code}}</div> </div>
+{%endif%}                       <br> <br>
+
+                                
+                                    <input type="hidden" id="codevalue" class="codevalue" name="codevalue" />
+                                    
+                                    <input type="submit" value="Run Code"  class="btn btn-info"/> 
+                                    <a href="javascript:void(0);" class="submitingcode btn btn-primary">Submit Code</a>
+                                    <br><br>
+                                 
+                                    <label for="out" style="color: black;font-weight: bold;"><h5>Output:</h5></label>
+                                    <br>
+                                    {%if langcur != 'php'%}
+                                    <textarea id="output" rows="10" readonly  style="resize: none;" cols="150">{{output}}</textarea>
+                                    {%else%}
+                                    <textarea id="output" rows="10"  readonly style="resize: none;"  cols="150">{{output}} </textarea>
+                                   
+                                    {%endif%}
+                                   
+                                    <br>
+                                     
+                                </form>  
+                            
+                                {%if testcases is not None%}
+                                <h3>Sample Test Case</h3>
+
+<textarea id="output" rows="10"  readonly style="resize: none;font-size: 25px;text-align:justify;"  cols="100">{%for testcase in testcases%}{{testcase}}
+{%endfor%}</textarea>
+                                {%endif%} 
+                                
+                                           
+                                          <br/> 
+                                          
+                                          
+                                         
+                                          <br> 
+                                           
+                                </div>
+                               
+                            </div>
+                        </div>
+                      
+                    </div>
+                  
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav>
+                       
+                        <p class="copyright text-center">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            <a href="#">Auto Grading</a>, made with love for a better web
+                        </p>
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+
+
+
+    <form id="locForm" action="/storeeverysecond" method="POST">
+        {%csrf_token%}
+        <input type="hidden" id="tempsave" name="tempsave"/>
+        <input type="hidden"  name="assignmentid" value="{{assignment.id}}"/>
+        <input type="hidden" id="curlanguage" name="curlanguage" /> 
+        <input type="hidden" id="countvalue" name="countvalue" /> 
+        
+    </form>
+
+
+    <form id="codesubmitform" action="/StudentfinalSubmitcode" method="POST">
+        {%csrf_token%}
+        <input type="hidden" id="filename" name="filename"/>
+        <input type="hidden" id="assignmentid" name="assignmentid" value="{{assignment.id}}"/>
+        <input type="hidden" id="finalcode" name="finalcode"/>
+        <input type="hidden" id="finallanguage" name="finallanguage"/> 
+        <input type="hidden" id="finaloutput" name="finaloutput"/> 
+    </form>
+
+</body>
+<!--   Core JS Files   -->
+
+<script src="{% static 'backend/assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'backend/assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-switch.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  
+<script src="{% static 'backend/assets/js/plugins/chartist.min.js' %}"></script>-->
+<!--  Notifications Plugin    -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-notify.js' %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static 'backend/assets/js/light-bootstrap-dashboard.js' %}" type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'backend/assets/js/demo.js' %}"></script>
+
+<script type="text/javascript">
+    
+
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        
+        $(".goback").each(function(){
+            $(this).on("click",function(){
+                console.log("click");
+                assignmentopictid = $(this).attr("id");
+                if(confirm("Warning!!!Are you sure you want Go to Back ?")){
+                    window.location = "/StudentAssignmentDetails/"+assignmentopictid;
+                }
+            });
+        });
+
+
+
+
+            jQuery(document).on('copy', function(e){ alert('warning!! copy (ctrl + c) detected');  e.preventDefault();  });
+            jQuery(document).on('cut', function(e){ alert('warning!! cut (ctrl + x) detected');  e.preventDefault(); });
+            jQuery(document).on('paste', function(e){ alert('warning!! pasting (ctrl + v) detected');  e.preventDefault(); });
+        $('body').bind("cut copy paste",function(e){
+            e.preventDefault();
+        });   
+        
+       $(document).bind("contextmenu",function(e){
+               alert('warning!! You cannot use right click is detected');
+          return false;
+       });
+    
+       
+
+
+
+        $(".lined").linedtextarea();
+
+        demo.initDashboardPageCharts();
+
+       // demo.showNotification('top','center');
+
+        $(".submitingcode").each(function(){
+            $(this).on("click",function(){
+                console.log("click");
+               
+                if(confirm("Warning !!!Are you sure you want to submit code ?"))
+                {
+                   console.log("submit");
+                   var finallang = $('.langselect').val();
+                   console.log(finallang);
+                   console.log($('#codevalue').val()); 
+                   $("#finallanguage").val(finallang);
+                   $("#finalcode").val($('#codevalue').val());
+                   $("#finaloutput").val($('#output').val());
+                    if(finallang == 'java')
+                    {
+                        $("#filename").val("Main.java");
+                    }
+                    else if(finallang == 'cpp')
+                    {
+                        $("#filename").val("Main.cpp");
+                    }
+                    else if(finallang == 'python3')
+                    {
+                        $("#filename").val("Main.py");
+                    }
+                    else if(finallang == 'c')
+                    {
+                        $("#filename").val("Main.c");
+                    }
+                    else if(finallang == 'octave')
+                    {
+                        $("#filename").val("Main.m");
+                    }
+                    else if(finallang == 'php')
+                    {
+                        $("#filename").val("Main.php");
+                    }
+                    else if(finallang == 'pascle')
+                    {
+                        $("#filename").val("Main.pass");
+                    }
+
+                   $('#codesubmitform').submit();
+                }
+                else
+                {
+                    console.log("not submit");
+                }
+            });
+        });
+
+
+
+        var thisSelect = $('.langselect').val();
+        //console.log(thisSelect);
+        $('.langselect').change(function(){
+        if(confirm("!!!Warning editor old code is clear!")){
+            switch(this.value){
+            
+                case "java":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/java");
+                var code = "class Main{    public static void main(String [] args){ } }";
+                console.log("java");
+                editor.setValue(code);
+                var beautify = ace.require("ace/ext/beautify");
+                beautify.beautify(editor.session);
+                thisSelect = "java";
+                break;
+
+                case "pascal":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/pascal");
+                var code = "";
+                editor.setValue("");
+                thisSelect = "pascal";
+                break;
+    
+                case "c":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/c_cpp");
+                var code ="";
+                editor.setValue("");
+                thisSelect = "c";
+                break;
+
+                
+                case "cpp":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/c_cpp");
+                editor.setValue("");
+                thisSelect = "cpp";
+                break;
+
+                case "octave":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/matlab");
+                editor.setValue("");
+                thisSelect = "octave";
+                break;
+    
+                case "php":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/php");
+                var code = "<?php echo 'hello world'; ?>";
+                editor.setValue(code);
+                thisSelect = "php";
+                break;
+    
+                case "python3":
+                var editor = ace.edit("editor");
+                editor.session.setMode("ace/mode/python");
+                editor.setValue("print('hello world')");
+                thisSelect = "python3";
+                break;
+            
+               
+                }
+            }else{
+               // console.log('cancle');
+               // console.log(thisSelect);
+                $('.langselect option[value='+thisSelect+']').prop('selected', true);
+            }
+           
+        });
+        var theme = $(".themeselect").val();
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/"+theme);
+        $('.themeselect').change(function(){
+            switch(this.value){
+                case "eclipse":
+              
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/eclipse");
+                break;
+
+                case "github":
+            
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/github");
+                editor.session.setMode("ace/mode/java");
+                break;
+
+                case "chrome":
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/chrome");
+                editor.session.setMode("ace/mode/java");
+              
+                break;
+
+                case "cloud":
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/clouds");
+                editor.session.setMode("ace/mode/java");
+              
+                break;
+
+                case "twilight":
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/twilight");
+                editor.session.setMode("ace/mode/java");
+               
+                break;
+
+                case "nord_dark":
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/nord_dark");
+                editor.session.setMode("ace/mode/java");
+               
+                break;
+
+                case "monokai":
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/monokai");
+                editor.session.setMode("ace/mode/java");
+           
+                break;
+            }
+        });
+
+        //console.log(editor.getSession().getValue());
+        $('#codevalue').val(editor.getSession().getValue()); 
+    });
+    
+    var editor = ace.edit("editor");
+    ace.require("ace/ext/language_tools");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    editor.getSession().on("change", function () {
+        //console.log(editor.getSession().getValue());
+        $('#codevalue').val(editor.getSession().getValue()); 
+        $("#tempsave").val(editor.getSession().getValue());
+        var curlanguagevalue = $('.langselect').val();
+        $("#curlanguage").val(curlanguagevalue);
+    });
+    editor.onPaste = function() { return ""; }
+
+    editor.setOptions({
+        fontSize: "20pt",
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: false
+    })
+</script>
+
+</html>

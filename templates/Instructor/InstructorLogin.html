@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Login</title>      
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+        <style type="text/css">
+            .error{
+                    color:red;
+                    margin-top:5px;
+                    font-size:17px;
+                    font-weight:bold;
+                }
+        </style>
+    </head>
+    <body>
+       
+        <div class="container">
+            <br><br><br><br>
+            <h1 style="text-align:center">Login Form</h1>
+            <br>
+            <form method="post" id="viewform" action="InstructorDashboard">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="username" style="font-size:18px" id="username" autocomplete="off" class="form-control" placeholder="Enter a Username">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" style="font-size:18px"  autocomplete="off"  class="form-control" placeholder="Enter a Password">
+                        </div>    
+                        <input type="submit" class="form-control btn btn-info" value="submit">   
+                        {% for message in messages%}
+                        <div style="color:red;font-weight:bold">	<h3>*{{message}}</h3></div>
+                            {% endfor%}
+                    </div>   
+
+                </div>   
+
+            </form>
+            
+           
+        </div>
+        <script>
+            $(document).ready(function(){
+                
+                
+                $("#viewform").validate({
+                    rules:{
+                        username: "required",
+                       
+                        password: "required",
+                    },
+                    
+                    messages:{
+                        username: "*Please Enter a Username",
+            
+                        password: "*Please Enter a Password",
+                    }
+                });
+            });
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,367 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'backend/assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'backend/assets/img/favicon.ico' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Student Assignment Details</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static 'backend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/assets/css/light-bootstrap-dashboard.css' %}" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'backend/assets/css/demo.css' %}" rel="stylesheet" />
+    <script type = "text/JavaScript">
+        <!--
+           function AutoRefresh( t ) {
+              setTimeout("location.reload(true);", t);
+           }
+        //-->
+     </script>
+    <style>
+
+        #grade ::-webkit-input-placeholder {
+            color:  rgba(5, 5, 5, 0.507) !important; }
+          #grade :-moz-placeholder {
+            color: rgba(5, 5, 5, 0.4) !important; }
+          #grade ::-moz-placeholder {
+            color: rgba(5, 5, 5, 0.4) !important; }
+          #grade :-ms-input-placeholder {
+            color: rgba(5, 5, 5, 0.4) !important; }
+
+    		td,th{
+                padding:20px;
+                text-align: center;
+    		}
+    </style>
+</head>
+
+<body onload = "JavaScript:AutoRefresh(10000);">
+    <div class="wrapper">
+        <div class="sidebar" data-image="{% static 'backend/assets/img/sidebar-5.jpg' %}">
+            
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    
+                     Auto Grading System 
+                   
+                </div>
+                <ul class="nav">
+                    
+                    <li>
+                        <a class="nav-link" href="/InstructorCourse">
+                            <i class="nc-icon nc-notes"></i>
+                            <p>Course</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/InstructorStudentPage">
+                            <i class="nc-icon nc-circle-09"></i>
+                            <p>Student</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/InstructorBatch">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Batch</p>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+           
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/InstructorProfile">
+                                   Account
+                                </a>
+                            </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link" href="/InstructorLogout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <a href="/InstructorStudentAssignmentDetails/{{solution.assignment.id}}" class="btn btn-info">Back</a>
+                                    <br> <br> <br>
+                                    
+                                    <h3 class="card-title" style="font-weight:bold;">{{solution.assignment.name}} </h3>
+                                    <br><br>
+                                    <h3 class="card-title" style="font-weight:bold;">{{solution.student}} Assignment Details </h3>
+                                         
+                                <div class="card-body ">
+                                    {% for message in messages%}
+                                    <div style="font-weight:bold;color:blue">	<h3>*{{message}}</h3></div>
+                                        {% endfor%}
+                                        <br>
+                                    {%if gradeobj is not None%}
+                                    <div style="font-weight:bold;color:blue">	
+                                        <h3>*Grade given {{gradeobj.name}}</h3>
+                                        <h3>*Grade percentage given {{gradeobj.percentage}}</h3>
+                                    </div>
+                                    {%else%}
+                                    <div style="font-weight:bold;color:blue">	
+                                        <h3>*Please Submit Grade</h3>
+                                      
+                                    </div>
+                                    {%endif%}
+
+                                   
+                                        
+                                              <br/> 
+                                    <h4>Assignment Defination: </h4>
+                                    <h4><div style="font-weight:bold;color:blue">{{solution.assignment.defination|safe}}</div></h4>
+                                    
+                                    <h4><div style="font-weight:bold;color:blue">Selected Programming Language: {{solution.language}}</div>  </h4>
+                                    <h4>Program</h4>
+                                    <br>
+                                    <pre style="font-size:20px;">{{solution.code}}</pre>
+                                    <br>
+                                    <h4> Assignment submit Date {{solution.date}}</h4>
+                                    <h4> Browser Opening Tab {{opentab}} times</h4>
+                                    <h4 style="font-weight: bold;">Percentage code efficient:{{solution.percentage|floatformat:"2"}}%</h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="progress" style="background-color:grey;">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="{{solution.percentage}}%"
+                                                aria-valuemin="0" aria-valuemax="{{solution.percentage}}" style="width:{{solution.percentage}}%;height:25px;">
+                                                
+                                                {{solution.percentage|floatformat:"2"}}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <h4>Grade {{solution.autograde}}</h4>
+                                    <table class="table-hover table-responsive" border="1">
+                                        <tr>
+                                            
+                                            <th>Index</th>
+                                            <th>Testcase id</th>
+                                            <th>Testcase Input</th>
+                                            <th>Testcase Student Output</th>
+                                             <th>Testcase Student expected Output</th>
+                                            <th>Status</th>
+                                          
+                                        </tr>
+                                     {% for test in testcases %}     
+                                            <tr>  
+                                               
+                                            <td>{{ forloop.counter }} </td>
+                                            <td>{{ test.id }} </td>
+                                            <td>{{test.testcase.input}}</td>
+                                            <td><pre style="text-align:justify;">{{test.studentcodeoutput}}</pre></td>
+                                            <td><pre style="text-align: justify;">{{test.studentexpectedoutput}}</pre></td>
+                                            <td>{{test.status}}</td>
+                                            </tr> 
+                                     {%endfor%}
+                                    </table>
+                                    <br>
+                                    <div class="row" id="grade">
+                                        <div class="col-md-4">
+                            {%if gradeobj is None%}
+                                    <form action="/GradeSubmit" method="POST" >
+                                        {%csrf_token%}
+                                        <input type="hidden" name="studentid" value="{{solution.student.id}}">
+                                        <input type="hidden" name="solutionid" value="{{solution.id}}">
+
+                                        <div class="form-group">
+                                            <label style="color:black" >Percentage</label>
+                                            <input type="text" required id="percentage" autocomplete="off" style="border:1px solid black;color:black"  class="form-control"  name="percentage" value="{{solution.percentage|floatformat:'2'}}" placeholder="Please Enter Percentage">
+                                        </div>
+                                            <label for="grade" style="color: black;"><h5>Grade:</h5></label>
+                                            <select  name="grade" style="color: black;border:1px solid black" class="form-control" required id="grade" >
+                                     
+                                                {%if solution.autograde == 'A'%}
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="A">A</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="E">E</option>
+                                                {%endif%}
+
+                                        {%if solution.autograde == 'B'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="E">E</option>
+                                        {%endif%}
+                                   
+                                        {%if solution.autograde == 'C'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected  class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="E">E</option>
+                                        {%endif%}
+                                   
+                                        {%if solution.autograde == 'D'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="D">D</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="E">E</option>
+                                        {%endif%}
+
+
+                                        {%if solution.autograde == 'E'%}
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="A">A</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                             <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" selected value="E">E</option>
+                                        {%endif%}
+                                            </select>
+                                            <input type="hidden" name="assignmentid" value="{{solution.assignment.id}}">
+                                            <br>
+                                            <input type="submit" class="btn btn-primary" value="Grade Submit">
+                                    </form>
+                            {%endif%}
+
+                            {%if gradeobj is not None%}
+                            <form action="/GradeSubmit" method="POST" >
+                                {%csrf_token%}
+                                <input type="hidden" name="studentid" value="{{solution.student.id}}">
+                                <input type="hidden" name="solutionid" value="{{solution.id}}">
+
+                                <div class="form-group">
+                                    <label style="color:black" >Percentage</label>
+                                    <input type="text" required id="percentage" autocomplete="off" style="border:1px solid black;color:black"  class="form-control"  name="percentage" value="{{gradeobj.percentage|floatformat:'2'}}" placeholder="Please Enter Percentage">
+                                </div>
+                                    <label for="grade" style="color: black;"><h5>Grade:</h5></label>
+                                    <select  name="grade" style="color: black;border:1px solid black" class="form-control" required id="grade" >
+                             
+                                        {%if gradeobj.name == 'A'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                        {%endif%}
+                                   
+                                        {%if gradeobj.name == 'B'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                        {%endif%}
+                                   
+                                        {%if gradeobj.name == 'C'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px"  class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected  class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="D">D</option>
+                                        {%endif%}
+                                   
+                                        {%if gradeobj.name == 'D'%}
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="A">A</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="B">B</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" class="form-control" value="C">C</option>
+                                        <option style="padding:10px;padding-left:20px;padding-right:20px" selected class="form-control" value="D">D</option>
+                                        {%endif%}
+                                   
+                                     
+                                    </select>
+                                    <input type="hidden" name="assignmentid" value="{{solution.assignment.id}}">
+                                    <br>
+                                    <input type="submit" class="btn btn-primary" value="Grade Submit">
+                            </form>
+                        {%endif%}
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                  
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav>
+                       
+                        <p class="copyright text-center">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            <a href="#">Auto Grading</a>, made with love for a better web
+                        </p>
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+   
+</body>
+<!--   Core JS Files   -->
+<script src="{% static 'backend/assets/js/core/jquery.3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'backend/assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'backend/assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-switch.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static 'backend/assets/js/plugins/chartist.min.js' %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-notify.js' %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static 'backend/assets/js/light-bootstrap-dashboard.js' %}" type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'backend/assets/js/demo.js' %}"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+       
+        function AutoRefresh( t ) {
+            setTimeout("location.reload(true);", t);
+         }
+  
+        demo.initDashboardPageCharts();
+
+        demo.showNotification('top','center');
+       
+
+    });
+</script>
+
+</html>

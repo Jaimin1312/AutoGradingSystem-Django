@@ -1,0 +1,338 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'backend/assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'backend/assets/img/favicon.ico' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Assignment Details</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- CSS Files -->
+    <link href="{% static 'backend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'backend/assets/css/light-bootstrap-dashboard.css' %}" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'backend/assets/css/demo.css' %}" rel="stylesheet" />
+    
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'lined-textarea/jquery-linedtextarea.css' %}"/>
+<script src="{% static 'lined-textarea/jquery-linedtextarea.js' %}" type="text/javascript"></script>
+<script src="{% static 'aceeditor/js/ace.js'%}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'aceeditor/js/ext-language_tools.js'%}"></script>
+<script src="{% static 'aceeditor/js/ext-beautify.js'%}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-beautify.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    $(function() {
+        function ajaxSubmit(form) {
+            $.ajax({
+                type: form.attr('method'), // <-- get method of form
+                url: form.attr('action'), // <-- get action of form
+                data: form.serialize(), // <-- serialize all fields into a string that is ready to be posted to your PHP file
+                beforeSend: function(){
+    
+                },
+                success: function(data){
+                }
+            });
+        }
+    
+        $("#locForm").submit(function(e) {
+            e.preventDefault();
+            ajaxSubmit($(this));
+        });
+
+        
+    
+        setInterval(function() {
+            ajaxSubmit($("#locForm"));
+            
+        }, 1000);
+    });
+    $(document).ready(function(){
+
+        tempcount =  +document.getElementById('tabcount').value;
+        if(tempcount >= 5)
+        {
+            window.location = "/limitover";
+            
+        }
+    });
+    var count=0;
+    function handleVisibilityChange() {
+        
+        if (document.hidden) {
+          
+            count = count +1;
+            $("#countvalue").val(count);
+            if(count > 5)
+             {
+                window.location = "/limitover";
+                 
+             }
+            if(alert('you open new tab '+count+' times'))
+            {
+                //var person = prompt("Please enter your name", "Harry Potter");
+            }
+            console.log("Hidden");
+        } else  {
+            
+            console.log("Visible");
+        }
+      }
+
+
+    document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+
+
+  document.onkeydown = function (e) {
+      e = e || window.event;//Get event
+  
+      if (!e.ctrlKey) return;
+  
+      var code = e.which || e.keyCode;//Get key code
+  
+      switch (code) {
+          case 83://Block Ctrl+S
+          case 87://Block Ctrl+W -- Not work in Chrome and new Firefox
+          case 17:
+              alert('ctrl key is detected');
+              e.preventDefault();
+              e.stopPropagation();
+              break;
+          case 19:
+              if(alert('windows key is detected'))
+              {
+              e.preventDefault();
+              e.stopPropagation();
+              }
+              break;
+      }
+      return false;
+  };
+</script>  
+<style>
+    		td,th{
+    			padding:20px;
+                text-align:center;
+            }
+            textarea{white-space:pre-line}
+            #editor { 
+                position: absolute;
+                top: 550px;
+                right: 100px;
+                bottom:500px;
+                left:10px;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+       <!--<div class="sidebar" data-image="{% static 'backend/assets/img/sidebar-5.jpg' %}">
+            
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    
+                     Auto Grading System 
+                   
+                </div>
+                <ul class="nav">
+                    
+                    
+                    <li>
+                        <a class="nav-link" href="/StudentCourse">
+                            <i class="nc-icon nc-notes"></i>
+                            <p>Course</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/StudentBatch">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Batch</p>
+                        </a>
+                    </li>
+                   
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+           
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Dashboard">
+                                   Account
+                                </a>
+                            </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Logout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>--> 
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <input type="hidden" id="tabcount" value="{{tabcount}}"/>
+                                    <a href="/StudentAssignmentView/{{assignment.id}}" class="btn btn-danger">Back</a>
+                                    {% for message in messages%}
+                                    <div style="color:red;font-weight:bold">	<h3>*{{message}}</h3></div>
+                                        {% endfor%}
+                                   
+                                    <br> <br> <br>
+                                    <h3 class="card-title" style="font-weight:bold;">Topic Name {{assignment.topic}} </h3>
+                                    <br>
+                                    <h3 class="card-title" style="font-weight:bold;">Assignment {{assignment.name}} Details</h3>
+                                    <br>
+                                    Created By <b>{{assignment.instructor}}</b>
+                                    <h3 style="color: blue;font-weight: bold;">Note (Please read carefully):</h3>
+                                    <ul>
+                                        
+                                        <h4 style="color: blue;font-weight: bold;"><li>Opening New tab not allowed.</li></h4>
+                                        <h4 style="color: blue;font-weight: bold;"><li>Opening New tab solution is not consider or disqualified.</li></h4>
+                                        <h4 style="color: blue;font-weight: bold;"><li>Copy, Paste and Cut is not allowed.</li></h4>
+                                        <h4 style="color: blue;font-weight: bold;"><li>Right Click is not allowed.</li></h4>
+                                        <h4 style="color: blue;font-weight: bold;"><li>Back button to go for code editor.</li></h4>
+                                       
+                                      </ul>
+                                </div>
+                               
+                                <div class="card-body ">
+                                    
+                                  <h3 style="font-weight:bold;">Defination </h3> 
+                                  <h4>{{assignment.defination|safe}}</h4>
+                                  <h4>Language: {{solution.language}}</h4>
+                                  <h4><pre>{{solution.code}}</pre></h4>
+                                
+                                                               
+                                          <br/> 
+                                          <table class="table-hover table-responsive" border="1">
+                                            <tr>
+                                                
+                                                <th>Index</th>
+                                               
+                                                <th>Status</th>
+                                              
+                                            </tr>
+                                         {% for test in testcases %}     
+                                                <tr>  
+                                                   
+                                                <td>Test {{ forloop.counter }} </td>
+                                              
+                                                <td>{{test.status}}</td>
+                                                </tr> 
+                                         {%endfor%}
+                                        </table>
+                                        <form id="locForm" action="/storeeverysecond" method="POST">
+                                            {%csrf_token%}
+                                            <input type="hidden" id="tempsave" name="tempsave" value="{{solution.code}}"/>
+                                            <input type="hidden"  name="assignmentid" value="{{assignment.id}}"/>
+                                            <input type="hidden" id="curlanguage" name="curlanguage" value="{{solution.language}}" /> 
+                                            <input type="hidden" id="countvalue" name="countvalue" /> 
+                                            
+                                        </form>
+                                      
+                                        <br>
+                                         
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                  
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav>
+                       
+                        <p class="copyright text-center">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            <a href="#">Auto Grading</a>, made with love for a better web
+                        </p>
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <form id="codesubmitform" action="/StudentfinalSubmitcode" method="POST">
+        {%csrf_token%}
+        <input type="hidden" id="assignmentid" name="assignmentid" value="{{assignment.id}}"/>
+        <input type="hidden" id="finalcode" name="finalcode"/>
+        <input type="hidden" id="finallanguage" name="finallanguage"/> 
+    </form>
+
+</body>
+<!--   Core JS Files   -->
+
+<script src="{% static 'backend/assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'backend/assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-switch.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  -->
+<script src="{% static 'backend/assets/js/plugins/chartist.min.js' %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static 'backend/assets/js/plugins/bootstrap-notify.js' %}"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="{% static 'backend/assets/js/light-bootstrap-dashboard.js' %}" type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'backend/assets/js/demo.js' %}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        jQuery(document).on('copy', function(e){ alert('warning!! copy (ctrl + c) detected');  e.preventDefault();  });
+        jQuery(document).on('cut', function(e){ alert('warning!! cut (ctrl + x) detected');  e.preventDefault(); });
+        jQuery(document).on('paste', function(e){ alert('warning!! pasting (ctrl + v) detected');  e.preventDefault(); });
+    $('body').bind("cut copy paste",function(e){
+        e.preventDefault();
+    });   
+    
+   $(document).bind("contextmenu",function(e){
+           alert('warning!! You cannot use right click is detected');
+      return false;
+   });
+        // Javascript method's body can be found in assets/js/demos.js
+        $(".lined").linedtextarea();
+
+        demo.initDashboardPageCharts();
+
+        //demo.showNotification('top','center');
+
+        
+    });
+</script>
+
+</html>
